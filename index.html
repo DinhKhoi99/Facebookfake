@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #050505;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        .page-container {
+            display: flex;
+            width: 100%;
+            height: calc(100vh - 58px);
+            min-height: 720px;
+        }
+
+        /* ================= CỘT TRÁI ================= */
+        .left-panel {
+            width: 65.5%;
+            height: 100%;
+            position: relative;
+            border-right: 1px solid #e4e6eb;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 42px 0 52px 56px;
+            
+        }
+
+        .fb-logo svg {
+            width: 52px;
+            height: 52px;
+            display: block;
+        }
+
+        .slogan {
+            font-size: 72px;
+            line-height: 1.05;
+            font-weight: 750;
+            letter-spacing: -2.8px;
+            color: #050505;
+            max-width: 420px;
+            z-index: 5;
+            user-select: none;
+        }
+
+        .slogan span.blue {
+            color: #0866ff;
+        }
+
+        .art-stage {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) scale(1.32);
+            transform-origin: center right;
+            width: 540px;
+            height: 570px;
+            z-index: 1;
+        }
+
+        .art-emoji {
+            position: absolute;
+            left: -32px;
+            top: 48px;
+            font-size: 56px;
+            transform: rotate(-14deg);
+            filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.12));
+            z-index: 6;
+            user-select: none;
+        }
+
+        .card-bg {
+            position: absolute;
+            left: 28px;
+            top: 95px;
+            width: 205px;
+            height: 235px;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+            z-index: 2;
+        }
+
+        .card-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-bg .icon-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .card-main {
+            position: absolute;
+            left: 165px;
+            top: 25px;
+            width: 265px;
+            height: 485px;
+            background: #fff;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 20px 42px rgba(0, 0, 0, 0.16);
+            z-index: 3;
+        }
+
+        .card-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-main .time-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(30, 30, 30, 0.5);
+            backdrop-filter: blur(8px);
+            color: #ffffff;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 4px 11px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-main .progress-bar-group {
+            position: absolute;
+            bottom: 22px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .card-main .bar-active {
+            flex: 1;
+            height: 13px;
+            border: 2.2px solid #ffffff;
+            border-radius: 10px;
+        }
+
+        .card-main .dot-indicator {
+            width: 15px;
+            height: 15px;
+            border: 2.2px solid #ffffff;
+            border-radius: 50%;
+        }
+
+        .card-post {
+            position: absolute;
+            left: 72px;
+            top: 295px;
+            width: 210px;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 12px 12px 16px 12px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+            z-index: 4;
+        }
+
+        .card-post .post-header-icon {
+            width: 24px;
+            height: 24px;
+            background: #0866ff;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            margin-bottom: 9px;
+        }
+
+        .card-post .post-img-wrapper {
+            width: 100%;
+            height: 135px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .card-post .post-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-post .skeleton-line-1 {
+            width: 68px;
+            height: 7.5px;
+            background-color: #e4e6eb;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .card-post .skeleton-line-2 {
+            width: 105px;
+            height: 7.5px;
+            background-color: #e4e6eb;
+            border-radius: 4px;
+        }
+
+        .heart-badge {
+            position: absolute;
+            right: 68px;
+            bottom: 185px;
+            width: 66px;
+            height: 66px;
+            background: #fa383e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 28px rgba(250, 56, 62, 0.4);
+            z-index: 7;
+        }
+
+        .heart-badge svg {
+            width: 38px;
+            height: 38px;
+            fill: #ffffff;
+        }
+
+        .card-avatar-circle {
+            position: absolute;
+            left: 185px;
+            bottom: 16px;
+            width: 146px;
+            height: 146px;
+            border-radius: 50%;
+            border: 4.5px solid #ffffff;
+            outline: 3.5px solid #0866ff;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            z-index: 8;
+        }
+
+        .card-avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ================= CỘT PHẢI ================= */
+        .right-panel {
+            width: 34.5%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 45px;
+        }
+
+        .btn-setting {
+            position: absolute;
+            top: 220px;
+            right: 56px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #050505;
+        }
+
+        .account-avatar {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .account-name {
+            font-size: 24px;
+            font-weight: 500;
+            color: #050505;
+            margin-bottom: 34px;
+            letter-spacing: -0.3px;
+        }
+
+        .action-group {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .btn-ui {
+            width: 100%;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s ease;
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #0866ff;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #005ce6;
+        }
+
+        .btn-secondary {
+            background-color: #f0f2f5;
+            color: #050505;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e4e6eb;
+        }
+
+        .btn-outline {
+            background-color: #ffffff;
+            color: #0866ff;
+            border: 1px solid #0866ff;
+            margin-top: 26px;
+        }
+
+        .btn-outline:hover {
+            background-color: #f0f5ff;
+        }
+
+        .meta-branding {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 28px;
+            color: #050505;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* ================= FOOTER ĐẦY ĐỦ ================= */
+        .footer-bar {
+            width: 100%;
+            background: #ffffff;
+            padding: 24px 0 28px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-top: 1px solid gray;
+        }
+
+        .footer-inner {
+            width: 100%;
+            max-width: 980px;
+            padding: 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .footer-line {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            column-gap: 20px;
+            row-gap: 6px;
+            line-height: 1.6;
+        }
+
+        .footer-line a {
+            color: #65676b;
+            text-decoration: none;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .footer-line a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= MODAL ĐĂNG NHẬP ================= */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background-color: #ffffff;
+            width: 480px;
+            border-radius: 24px;
+            padding: 24px 32px 34px 32px;
+            box-shadow: 0 12px 28px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Nút Close X */
+        .modal-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #65676b;
+            transition: background-color 0.15s;
+        }
+
+        .modal-close-btn:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Avatar trong modal */
+        .modal-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 15px;
+            margin-bottom: 22px;
+        }
+
+        /* Tên tài khoản */
+        .modal-user-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #050505;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        /* Input mật khẩu */
+        .modal-input-wrap {
+            width: 100%;
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .modal-input-field {
+            width: 100%;
+            height: 58px;
+            padding: 24px 16px 8px 16px;
+            border: 1px solid #ccd0d5;
+            border-radius: 12px;
+            font-size: 17px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #ffffff;
+        }
+
+        .modal-input-field:focus {
+            border-color: #0866ff;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        .modal-input-label {
+            position: absolute;
+            left: 16px;
+            top: 10px;
+            font-size: 13px;
+            color: #65676b;
+            pointer-events: none;
+            transition: 0.15s ease all;
+        }
+
+        /* Nút Đăng nhập */
+        .modal-submit-btn {
+            width: 100%;
+            height: 48px;
+            background-color: #0866ff;
+            color: #ffffff;
+            border: none;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 22px;
+            transition: background-color 0.15s;
+        }
+
+        .modal-submit-btn:hover {
+            background-color: #005ce6;
+        }
+
+        /* Quên mật khẩu */
+        .modal-forgot-link {
+            font-size: 15px;
+            color: #050505;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .modal-forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 1200px) {
+            .art-stage {
+                transform: translateY(-50%) scale(1.15);
+            }
+
+            .slogan {
+                font-size: 56px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page-container">
+
+        <!-- CỘT TRÁI -->
+        <div class="left-panel">
+            <div class="fb-logo">
+                <svg viewBox="0 0 36 36" fill="#0866ff">
+                    <path
+                        d="M20.181 35.87C29.094 34.791 36 27.202 36 18c0-9.941-8.059-18-18-18S0 8.059 0 18c0 8.522 5.918 15.663 13.882 17.589V23.09h-4.99v-5.09h4.99v-3.877c0-4.928 2.934-7.65 7.426-7.65 2.152 0 4.404.384 4.404.384v4.843h-2.481c-2.442 0-3.204 1.516-3.204 3.07v3.23h5.459l-.873 5.09h-4.586v12.78z">
+                    </path>
+                </svg>
+            </div>
+
+            <div class="slogan">
+                Khám<br>
+                phá<br>
+                những<br>
+                điều <span class="blue">bạn</span><br>
+                <span class="blue">yêu</span><br>
+                <span class="blue">thích</span>.
+            </div>
+
+            <!-- CỤM 4 HÌNH -->
+            <div class="art-stage">
+                <div class="art-emoji">😆</div>
+
+                <!-- Card chậu cây -->
+                <div class="card-bg">
+                    <div class="icon-tag">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                    </div>
+                    <img src="chauhoa.png" alt="Marketplace">
+                </div>
+
+                <!-- Card cô gái -->
+                <div class="card-main">
+                    <div class="time-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm.5 13H11V7h1.5v6l4.2 2.5-.7 1.2-4.5-2.7z" />
+                        </svg>
+                        16:45
+                    </div>
+                    <img src="hcnfb.png" alt="Story">
+
+                    <div class="progress-bar-group">
+                        <div class="bar-active"></div>
+                        <div class="dot-indicator"></div>
+                        <div class="dot-indicator"></div>
+                    </div>
+                </div>
+
+                <!-- Thẻ bài viết trượt ván -->
+                <div class="card-post">
+                    <div class="post-header-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                        </svg>
+                    </div>
+                    <div class="post-img-wrapper">
+                        <img src="hinhanh.png" alt="Post">
+                    </div>
+                    <div class="skeleton-line-1"></div>
+                    <div class="skeleton-line-2"></div>
+                </div>
+
+                <!-- Nút Heart -->
+                <div class="heart-badge">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                </div>
+
+                <!-- Card avatar tròn -->
+                <div class="card-avatar-circle">
+                    <img src="hoa.png" alt="Profile">
+                </div>
+            </div>
+        </div>
+
+        <!-- CỘT PHẢI -->
+        <div class="right-panel">
+            <div class="btn-setting">
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z" />
+                </svg>
+            </div>
+
+            <img src="avatar.png" class="account-avatar" alt="Avatar">
+
+            <div class="account-name">Ngọc Diệp</div>
+
+            <div class="action-group">
+                <!-- NÚT TIẾP TỤC ĐƯỢC GẮN ID ĐỂ MỞ MODAL -->
+                <button id="btnContinue" class="btn-ui btn-primary">Tiếp tục</button>
+                <button class="btn-ui btn-secondary">Dùng trang cá nhân khác</button>
+                <button class="btn-ui btn-outline">Tạo tài khoản mới</button>
+            </div>
+
+            <div class="meta-branding">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="#0866ff">
+                    <path
+                        d="M16.96 5.89c-1.93 0-3.49 1.12-4.96 3.01-1.47-1.89-3.03-3.01-4.96-3.01C3.12 5.89 0 9.07 0 13.06c0 4.15 3.36 7.05 7.04 7.05 2.12 0 3.79-1.09 4.96-2.73 1.17 1.64 2.84 2.73 4.96 2.73 3.68 0 7.04-2.9 7.04-7.05 0-3.99-3.12-7.17-7.04-7.17zm-9.92 11.8c-2.3 0-4.32-1.86-4.32-4.63 0-2.75 2.01-4.63 4.32-4.63 1.76 0 3.08 1.14 4.09 2.85-1.07 2.22-2.36 6.41-4.09 6.41zm9.92 0c-1.73 0-3.02-4.19-4.09-6.41 1.01-1.71 2.33-2.85 4.09-2.85 2.31 0 4.32 1.88 4.32 4.63 0 2.77-2.02 4.63-4.32 4.63z" />
+                </svg>
+                Meta
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER ĐẦY ĐỦ CHUẨN FACEBOOK -->
+    <footer class="footer-bar">
+        <div class="footer-inner">
+            <!-- Dòng 1: Ngôn ngữ -->
+            <div class="footer-line">
+                <a href="#">Tiếng Việt</a>
+                <a href="#">English (UK)</a>
+                <a href="#">中文(台灣)</a>
+                <a href="#">한국어</a>
+                <a href="#">日本語</a>
+                <a href="#">Français (France)</a>
+                <a href="#">ภาษาไทย</a>
+                <a href="#">Ngôn ngữ khác...</a>
+            </div>
+
+            <!-- Dòng 2: Dịch vụ & Nền tảng -->
+            <div class="footer-line">
+                <a href="#">Đăng ký</a>
+                <a href="#">Đăng nhập</a>
+                <a href="#">Messenger</a>
+                <a href="#">Facebook Lite</a>
+                <a href="#">Video</a>
+                <a href="#">Meta Pay</a>
+                <a href="#">Cửa hàng trên Meta</a>
+                <a href="#">Meta Quest</a>
+                <a href="#">Ray-Ban Meta</a>
+                <a href="#">Meta AI</a>
+                <a href="#">Muse</a>
+                <a href="#">Instagram</a>
+                <a href="#">Threads</a>
+            </div>
+
+            <!-- Dòng 3 & 4: Chính sách, Điều khoản & Hỗ trợ -->
+            <div class="footer-line">
+                <a href="#">Chính sách quyền riêng tư</a>
+                <a href="#">Trung tâm quyền riêng tư</a>
+                <a href="#">Giới thiệu</a>
+                <a href="#">Tạo quảng cáo</a>
+                <a href="#">Tạo Trang</a>
+                <a href="#">Nhà phát triển</a>
+                <a href="#">Tuyển dụng</a>
+                <a href="#">Cookie</a>
+                <a href="#">Lựa chọn quảng cáo</a>
+                <a href="#">Điều khoản</a>
+                <a href="#">Trợ giúp</a>
+                <a href="#">Tải thông tin liên hệ lên & đối tượng không phải người dùng</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODAL DIALOG ================= -->
+    <div id="loginModal" class="modal-overlay">
+        <div class="modal-card">
+            <!-- Nút đóng X -->
+            <button id="btnCloseModal" class="modal-close-btn" aria-label="Đóng">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                </svg>
+            </button>
+
+            <!-- Avatar -->
+            <img src="avatar.png" class="modal-avatar" alt="Avatar">
+
+            <!-- Tên tài khoản -->
+            <div class="modal-user-name">Ngọc Diệp</div>
+
+            <!-- Khung nhập Mật khẩu -->
+            <div class="modal-input-wrap">
+                <span class="modal-input-label">Mật khẩu</span>
+                <input type="password" id="pwdInput" class="modal-input-field" autofocus>
+            </div>
+
+            <!-- Nút Đăng nhập -->
+            <button class="modal-submit-btn"><a href="https://www.youtube.com/" style="text-decoration: none; ">Đăng nhập</a></button>
+
+            <!-- Quên mật khẩu -->
+            <a href="#" class="modal-forgot-link">Quên mật khẩu?</a>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        const btnContinue = document.getElementById('btnContinue');
+        const loginModal = document.getElementById('loginModal');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        const pwdInput = document.getElementById('pwdInput');
+
+        // Mở Modal
+        btnContinue.addEventListener('click', () => {
+            loginModal.classList.add('active');
+            setTimeout(() => pwdInput.focus(), 100);
+        });
+
+        // Đóng Modal khi bấm X
+        btnCloseModal.addEventListener('click', () => {
+            loginModal.classList.remove('active');
+        });
+
+        // Đóng Modal khi bấm ra ngoài nền tối
+        loginModal.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.classList.remove('active');
+            }
+        });
+
+        // Đóng Modal bằng phím Escape (ESC)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && loginModal.classList.contains('active')) {
+                loginModal.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
